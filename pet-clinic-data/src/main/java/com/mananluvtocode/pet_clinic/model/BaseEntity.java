@@ -5,7 +5,6 @@ import java.io.Serializable;
 public class BaseEntity implements Serializable {
     // box types can be null in fact the primitive values can't be null for doing the things.
     private Long id;
-
     public Long getId() {
         return id;
     }
