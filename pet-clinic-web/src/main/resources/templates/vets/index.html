@@ -5,6 +5,22 @@
     <title>List of Vets</title>
 </head>
 <body>
- <h1 th:text="'List of vets'"/>
+<h1 th:text="'List of vets'"/>
+<table>
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>FirstName</th>
+        <th>LastName</th>
+    </tr>
+    </thead>
+    <tbody th:each="vet:${vets}">
+    <tr>
+        <td th:text="${vet.id}"></td>
+        <td th:text="${vet.firstName}"></td>
+        <td th:text="${vet.lastName}"></td>
+    </tr>
+    </tbody>
+</table>
 </body>
 </html>
