@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/owners")
 public class OwnerController {
     // declaring final because the object will never be change for doing the further work.
     private final OwnerService ownerService;
@@ -14,9 +15,14 @@ public class OwnerController {
         this.ownerService = ownerService;
     }
 
-    @RequestMapping({"/owners", "/owners/index", "/owners/index.html", ""})
+    @RequestMapping({"/", "/index", "index.html", ""})
     public String ownerpage(Model themodel) {
         themodel.addAttribute("owners", ownerService.findAll());
         return "owners/index";
+    }
+
+    @RequestMapping({"/find", "/oups"})
+    public String findOwners() {
+        return "notImplemented";
     }
 }
