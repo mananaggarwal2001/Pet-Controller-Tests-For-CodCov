@@ -1,14 +1,25 @@
 package com.mananluvtocode.pet_clinic.services.map;
 
 import com.mananluvtocode.pet_clinic.model.Owner;
+import com.mananluvtocode.pet_clinic.model.Pet;
+import com.mananluvtocode.pet_clinic.model.PetType;
 import com.mananluvtocode.pet_clinic.services.CrudService;
 import com.mananluvtocode.pet_clinic.services.OwnerService;
+import com.mananluvtocode.pet_clinic.services.PetService;
+import com.mananluvtocode.pet_clinic.services.PetTypeService;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
 public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements OwnerService {
+    private final PetTypeService petTypeService;
+    private final PetService petService;
+
+    public OwnerServiceMap(PetTypeService petTypeService, PetService petService) {
+        this.petTypeService = petTypeService;
+        this.petService = petService;
+    }
 
     @Override
     public Set<Owner> findAll() {
@@ -32,7 +43,28 @@ public class OwnerServiceMap extends AbstractMapService<Owner, Long> implements 
 
     @Override
     public Owner save(Owner object) {
-        return super.save(object);
+        Owner savedOwner = null;
+        if (object != null) {
+            if (object.getPets() != null) {
+                object.getPets().forEach(pet -> {
+                    if (pet.getPetType() != null) {
+                        if (pet.getPetType().getId() == null) {
+                            PetType resultantPetType = petTypeService.save(pet.getPetType());
+                            pet.setPetType(resultantPetType);
+                        }
+                        if (pet.getId() == null) {
+                            Pet resultantPet = petService.save(pet);
+                            pet.setId(resultantPet.getId());
+                        }
+                    } else {
+                        throw new RuntimeException("Pet Type is Required");
+                    }
+                });
+            }
+            return super.save(object);
+        } else {
+            return null;
+        }
     }
 
     @Override

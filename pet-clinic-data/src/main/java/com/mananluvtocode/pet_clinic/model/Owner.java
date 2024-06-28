@@ -1,5 +1,6 @@
 package com.mananluvtocode.pet_clinic.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 
@@ -9,7 +10,7 @@ public class Owner extends Person {
     private String telePhone;
 
 
-    private Set<Pet> pets;
+    private Set<Pet> pets = new HashSet<>();
 
     public String getAddress() {
         return address;

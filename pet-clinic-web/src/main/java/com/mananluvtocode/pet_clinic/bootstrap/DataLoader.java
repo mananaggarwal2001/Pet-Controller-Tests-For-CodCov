@@ -1,16 +1,18 @@
 package com.mananluvtocode.pet_clinic.bootstrap;
 
 import com.mananluvtocode.pet_clinic.model.Owner;
+import com.mananluvtocode.pet_clinic.model.Pet;
 import com.mananluvtocode.pet_clinic.model.PetType;
 import com.mananluvtocode.pet_clinic.model.Vet;
 import com.mananluvtocode.pet_clinic.services.OwnerService;
 import com.mananluvtocode.pet_clinic.services.PetTypeService;
 import com.mananluvtocode.pet_clinic.services.VetService;
-import com.mananluvtocode.pet_clinic.services.map.OwnerServiceMap;
-import com.mananluvtocode.pet_clinic.services.map.VetServiceMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
+import java.util.Locale;
 
 // this implements the data of the class on load for doing the work.
 @Component
@@ -40,19 +42,40 @@ public class DataLoader implements CommandLineRunner {
         PetType savedDogPetType = petType.save(dog);
 
 
-        PetType  cat= new PetType();
+        PetType cat = new PetType();
         cat.setName("Cat");
         PetType savedCatPetType = petType.save(cat);
 
         Owner owner1 = new Owner();
         owner1.setFirstName("John");
         owner1.setLastName("Doe");
+        owner1.setAddress("Noida from India");
+        owner1.setCity("Uttar Pradesh");
+        owner1.setTelePhone("1234567890");
 
         ownerService.save(owner1);
+
+        // adding the couple of dogs
+        Pet mikepet = new Pet();
+        mikepet.setPetType(savedDogPetType);
+        mikepet.setOwner(owner1);
+        mikepet.setBirthDate(LocalDate.now());
+        mikepet.setName("Rosco");
+        owner1.getPets().add(mikepet);
 
         Owner owner2 = new Owner();
         owner2.setFirstName("Jane");
         owner2.setLastName("Doe");
+        owner2.setAddress("Tokyo From Japan");
+        owner2.setCity("Tokyo");
+        owner2.setTelePhone("987654321");
+        Pet fionanceCat = new Pet();
+        fionanceCat.setPetType(savedCatPetType);
+        fionanceCat.setOwner(owner2);
+        fionanceCat.setBirthDate(LocalDate.now());
+        fionanceCat.setName("fionance");
+        owner2.getPets().add(fionanceCat);
+
 
         ownerService.save(owner2);
 
