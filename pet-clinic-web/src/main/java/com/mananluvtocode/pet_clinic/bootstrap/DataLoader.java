@@ -1,12 +1,11 @@
 package com.mananluvtocode.pet_clinic.bootstrap;
 
-import com.mananluvtocode.pet_clinic.model.Owner;
-import com.mananluvtocode.pet_clinic.model.Pet;
-import com.mananluvtocode.pet_clinic.model.PetType;
-import com.mananluvtocode.pet_clinic.model.Vet;
+import com.mananluvtocode.pet_clinic.model.*;
 import com.mananluvtocode.pet_clinic.services.OwnerService;
 import com.mananluvtocode.pet_clinic.services.PetTypeService;
+import com.mananluvtocode.pet_clinic.services.SpecialityService;
 import com.mananluvtocode.pet_clinic.services.VetService;
+import com.mananluvtocode.pet_clinic.services.map.PetServiceMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -20,6 +19,8 @@ public class DataLoader implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petType;
+    private final SpecialityService specialityService;
+    private final PetServiceMap petServiceMap;
 
     // hard code implementation which is
 //    public DataLoader(){
@@ -29,22 +30,43 @@ public class DataLoader implements CommandLineRunner {
 
     // this below constructor the classes are initialized by the Spring itself.
     @Autowired
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petType) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petType, SpecialityService specialityService, PetServiceMap petServiceMap) {
         this.ownerService = ownerService; // the Spring will initialize this annotation for doing the work.
         this.vetService = vetService;
         this.petType = petType;
+        this.specialityService = specialityService;
+        this.petServiceMap = petServiceMap;
     }
 
     @Override
     public void run(String... args) throws Exception {
+        int count = petServiceMap.findAll().size();
+        if (count == 0) {
+            loadData();
+        }
+    }
+
+    private void loadData() {
         PetType dog = new PetType();
         dog.setName("Dog");
         PetType savedDogPetType = petType.save(dog);
 
-
         PetType cat = new PetType();
         cat.setName("Cat");
         PetType savedCatPetType = petType.save(cat);
+        // speciality for adding into the owner class
+        Speciality radiology = new Speciality();
+        radiology.setDescription("Radiology");
+        Speciality savedRadiologySpeciality = specialityService.save(radiology);
+
+        Speciality dentistry = new Speciality();
+        dentistry.setDescription("Dentistry");
+        Speciality savedDentistry = specialityService.save(dentistry);
+
+        Speciality surgery = new Speciality();
+        surgery.setDescription("Surgery");
+        Speciality savedSurgery = specialityService.save(surgery);
+
 
         Owner owner1 = new Owner();
         owner1.setFirstName("John");
@@ -85,14 +107,17 @@ public class DataLoader implements CommandLineRunner {
         Vet vet1 = new Vet();
         vet1.setFirstName("Sam");
         vet1.setLastName("Axe");
-
+        vet1.getSpecialities().add(savedDentistry);
         vetService.save(vet1);
 
         Vet vet2 = new Vet();
         vet2.setFirstName("Bob");
         vet2.setLastName("Jack");
+        vet2.getSpecialities().add(savedSurgery);
 
         vetService.save(vet2);
+
+
         System.out.println("Loaded Vets");
     }
 }
