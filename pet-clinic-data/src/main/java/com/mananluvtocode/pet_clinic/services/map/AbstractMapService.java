@@ -2,7 +2,7 @@ package com.mananluvtocode.pet_clinic.services.map;
 import com.mananluvtocode.pet_clinic.model.BaseEntity;
 import java.util.*;
 
-// base map services that i can implement for doing the further work.
+// base map services that I can implement for doing the further work.
 public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> {
     protected Map<Long, T> map = new HashMap<>();
 
