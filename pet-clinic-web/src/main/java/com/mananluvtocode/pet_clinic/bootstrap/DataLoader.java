@@ -1,11 +1,9 @@
 package com.mananluvtocode.pet_clinic.bootstrap;
 
 import com.mananluvtocode.pet_clinic.model.*;
-import com.mananluvtocode.pet_clinic.services.OwnerService;
-import com.mananluvtocode.pet_clinic.services.PetTypeService;
-import com.mananluvtocode.pet_clinic.services.SpecialityService;
-import com.mananluvtocode.pet_clinic.services.VetService;
+import com.mananluvtocode.pet_clinic.services.*;
 import com.mananluvtocode.pet_clinic.services.map.PetServiceMap;
+import com.mananluvtocode.pet_clinic.services.springdatajpaversion.VisitServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -21,6 +19,7 @@ public class DataLoader implements CommandLineRunner {
     private final PetTypeService petType;
     private final SpecialityService specialityService;
     private final PetServiceMap petServiceMap;
+    private final VisitService visitService;
 
     // hard code implementation which is
 //    public DataLoader(){
@@ -30,12 +29,13 @@ public class DataLoader implements CommandLineRunner {
 
     // this below constructor the classes are initialized by the Spring itself.
     @Autowired
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petType, SpecialityService specialityService, PetServiceMap petServiceMap) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petType, SpecialityService specialityService, PetServiceMap petServiceMap, VisitService visitService) {
         this.ownerService = ownerService; // the Spring will initialize this annotation for doing the work.
         this.vetService = vetService;
         this.petType = petType;
         this.specialityService = specialityService;
         this.petServiceMap = petServiceMap;
+        this.visitService = visitService;
     }
 
     @Override
@@ -95,13 +95,21 @@ public class DataLoader implements CommandLineRunner {
         fionanceCat.setPetType(savedCatPetType);
         fionanceCat.setOwner(owner2);
         fionanceCat.setBirthDate(LocalDate.now());
-        fionanceCat.setName("fionance");
+        fionanceCat.setName("finance");
         owner2.getPets().add(fionanceCat);
 
 
         ownerService.save(owner2);
 
         System.out.println("Loaded Owner!!!!!!!!!!!!!!");
+        // for adding the visit service for doing the greater work.
+        Visit catVisit = new Visit();
+        catVisit.setPet(fionanceCat);
+        catVisit.setDate(LocalDate.now());
+        catVisit.setDescription("Sneezy Kitty");
+
+        visitService.save(catVisit);
+        System.out.println("Loading the Visit Data for doing the personal work.");
 
         // for making the vets objects for doing the further work.
         Vet vet1 = new Vet();
