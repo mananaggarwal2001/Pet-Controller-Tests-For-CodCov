@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.springframework.context.annotation.EnableMBeanExport;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "pets")
@@ -23,6 +25,10 @@ public class Pet extends BaseEntity {
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
+    @OneToMany(mappedBy = "pet")
+    Set<Visit> resultantVisit= new HashSet<>();
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "pet")
+    private Set<Visit> visits;
     public String getName() {
         return name;
     }
