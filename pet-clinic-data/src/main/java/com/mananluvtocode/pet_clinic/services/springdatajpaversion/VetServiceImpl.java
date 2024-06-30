@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-@Profile("SpringDataJPA")
+@Profile("SpringDatajpa")
 public class VetServiceImpl implements VetService {
     private final VetRepository vetRepository;
 
