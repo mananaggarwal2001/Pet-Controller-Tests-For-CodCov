@@ -43,17 +43,7 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public Owner save(Owner object) {
-        System.out.println("###################");
-        System.out.println("###################");
-        System.out.println("###################");
-        System.out.println("###################");
-        System.out.println("###################");
-        System.out.println("###################");
-        System.out.println("###################");
-        System.out.println("###################");
-        System.out.println("###################");
-        System.out.println("###################");
-        System.out.println("###################");
+        System.out.println("Running JPA Profile for actual database implementation");
         return ownerRepository.save(object);
     }
 
