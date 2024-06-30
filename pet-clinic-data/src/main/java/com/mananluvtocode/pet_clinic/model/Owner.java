@@ -19,7 +19,7 @@ public class Owner extends Person {
     @Column(name = "telephone")
     private String telePhone;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet")
     private Set<Pet> pets = new HashSet<>();
 
     public String getAddress() {

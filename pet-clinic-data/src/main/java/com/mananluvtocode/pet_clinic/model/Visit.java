@@ -3,6 +3,9 @@ package com.mananluvtocode.pet_clinic.model;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "visits")
 public class Visit extends BaseEntity {
@@ -16,6 +19,8 @@ public class Visit extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
+
+
 
     public LocalDate getDate() {
         return date;

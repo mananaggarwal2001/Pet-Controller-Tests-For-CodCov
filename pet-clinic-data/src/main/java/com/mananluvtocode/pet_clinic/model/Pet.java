@@ -25,10 +25,11 @@ public class Pet extends BaseEntity {
     @JoinColumn(name = "owner_id")
     private Owner owner;
 
-    @OneToMany(mappedBy = "pet")
-    Set<Visit> resultantVisit= new HashSet<>();
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "pet")
-    private Set<Visit> visits;
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL)
+    private Set<Visit> visits = new HashSet<>();
+
+
+
     public String getName() {
         return name;
     }
@@ -59,5 +60,13 @@ public class Pet extends BaseEntity {
 
     public void setOwner(Owner owner) {
         this.owner = owner;
+    }
+
+    public Set<Visit> getVisits() {
+        return visits;
+    }
+
+    public void setVisits(Set<Visit> visits) {
+        this.visits = visits;
     }
 }
