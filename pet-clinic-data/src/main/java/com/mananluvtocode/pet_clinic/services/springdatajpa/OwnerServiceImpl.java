@@ -19,8 +19,7 @@ public class OwnerServiceImpl implements OwnerService {
     private final PetRepository petRepository;
     private final PetTypeRepository petTypeRepository;
 
-    public OwnerServiceImpl(OwnerRepository ownerRepository, PetRepository petRepository
-            , PetTypeRepository petTypeRepository) {
+    public OwnerServiceImpl(OwnerRepository ownerRepository, PetRepository petRepository, PetTypeRepository petTypeRepository) {
         this.ownerRepository = ownerRepository;
         this.petRepository = petRepository;
         this.petTypeRepository = petTypeRepository;
