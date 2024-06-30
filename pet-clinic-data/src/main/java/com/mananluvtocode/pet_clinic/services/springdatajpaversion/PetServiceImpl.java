@@ -1,4 +1,4 @@
-package com.mananluvtocode.pet_clinic.services.springdatajpa;
+package com.mananluvtocode.pet_clinic.services.springdatajpaversion;
 
 import com.mananluvtocode.pet_clinic.model.Pet;
 import com.mananluvtocode.pet_clinic.repositories.PetRepository;
