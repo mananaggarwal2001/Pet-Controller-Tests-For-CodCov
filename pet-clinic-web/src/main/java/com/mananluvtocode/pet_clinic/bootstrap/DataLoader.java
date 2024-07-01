@@ -2,14 +2,11 @@ package com.mananluvtocode.pet_clinic.bootstrap;
 
 import com.mananluvtocode.pet_clinic.model.*;
 import com.mananluvtocode.pet_clinic.services.*;
-import com.mananluvtocode.pet_clinic.services.map.PetServiceMap;
-import com.mananluvtocode.pet_clinic.services.springdatajpaversion.VisitServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.Locale;
 
 // this implements the data of the class on load for doing the work.
 @Component
