@@ -70,9 +70,9 @@ class OwnerServiceImplTest {
 
     @Test
     void findById() {
-    // for testing whether the owner is returned correctly using the id or not.
+        // for testing whether the owner is returned correctly using the id or not.
         when(ownerRepository.findById(anyLong())).thenReturn(Optional.of(returnOwner));
-        Owner mockReturnedOwner= service.findById(returnOwner.getId());
+        Owner mockReturnedOwner = service.findById(returnOwner.getId());
         assertEquals(returnOwner.getId(), mockReturnedOwner.getId());
         // for checking whether the owner is not null or not.
         assertNotNull(mockReturnedOwner);
@@ -84,7 +84,7 @@ class OwnerServiceImplTest {
     @Test
     void findByNotIdFound() {
         when(ownerRepository.findById(anyLong())).thenReturn(Optional.empty());
-        Owner mockReturnedOwner= service.findById(returnOwner.getId());
+        Owner mockReturnedOwner = service.findById(returnOwner.getId());
         // this will check whether the result will be null or not.
         assertNull(mockReturnedOwner);
     }
@@ -101,7 +101,7 @@ class OwnerServiceImplTest {
 
     @Test
     void delete() {
-    // for delete method
+        // for delete method
         ownerRepository.delete(returnOwner);
         // then verify that ownerRepository method is called one time
         verify(ownerRepository, times(1)).delete(any());
