@@ -2,7 +2,6 @@ package com.mananluvtocode.pet_clinic.services.springdatajpaversion;
 
 import com.mananluvtocode.pet_clinic.model.Owner;
 import com.mananluvtocode.pet_clinic.repositories.OwnerRepository;
-import com.mananluvtocode.pet_clinic.services.OwnerService;
 import com.mananluvtocode.pet_clinic.services.PetService;
 import com.mananluvtocode.pet_clinic.services.PetTypeService;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.HashSet;
 import java.util.Optional;
