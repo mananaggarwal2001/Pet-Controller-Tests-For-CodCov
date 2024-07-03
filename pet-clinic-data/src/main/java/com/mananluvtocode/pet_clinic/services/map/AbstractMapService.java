@@ -1,5 +1,7 @@
 package com.mananluvtocode.pet_clinic.services.map;
+
 import com.mananluvtocode.pet_clinic.model.BaseEntity;
+
 import java.util.*;
 
 // base map services that I can implement for doing the further work.
@@ -31,7 +33,7 @@ public abstract class AbstractMapService<T extends BaseEntity, ID extends Long> 
     }
 
     void delete(T object) {
-        map.entrySet().removeIf(entry -> entry.equals(object));
+        map.entrySet().removeIf(entry -> entry.getValue().equals(object));
     }
 
     private Long getNextId() {
