@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Service
-@Profile("SpringDataJPA")
+@Profile("SpringDatajpa")
 public class OwnerServiceImpl implements OwnerService {
     private final OwnerRepository ownerRepository;
     private final PetRepository petRepository;
@@ -43,6 +43,7 @@ public class OwnerServiceImpl implements OwnerService {
 
     @Override
     public Owner save(Owner object) {
+        System.out.println("Running JPA Profile for actual database implementation");
         return ownerRepository.save(object);
     }
 

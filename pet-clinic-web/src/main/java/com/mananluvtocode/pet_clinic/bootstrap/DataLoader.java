@@ -2,14 +2,11 @@ package com.mananluvtocode.pet_clinic.bootstrap;
 
 import com.mananluvtocode.pet_clinic.model.*;
 import com.mananluvtocode.pet_clinic.services.*;
-import com.mananluvtocode.pet_clinic.services.map.PetServiceMap;
-import com.mananluvtocode.pet_clinic.services.springdatajpaversion.VisitServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
-import java.util.Locale;
 
 // this implements the data of the class on load for doing the work.
 @Component
@@ -18,7 +15,7 @@ public class DataLoader implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petType;
     private final SpecialityService specialityService;
-    private final PetServiceMap petServiceMap;
+    private final PetService petService;
     private final VisitService visitService;
 
     // hard code implementation which is
@@ -29,18 +26,18 @@ public class DataLoader implements CommandLineRunner {
 
     // this below constructor the classes are initialized by the Spring itself.
     @Autowired
-    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petType, SpecialityService specialityService, PetServiceMap petServiceMap, VisitService visitService) {
+    public DataLoader(OwnerService ownerService, VetService vetService, PetTypeService petType, SpecialityService specialityService, PetService petService, VisitService visitService) {
         this.ownerService = ownerService; // the Spring will initialize this annotation for doing the work.
         this.vetService = vetService;
         this.petType = petType;
         this.specialityService = specialityService;
-        this.petServiceMap = petServiceMap;
+        this.petService = petService;
         this.visitService = visitService;
     }
 
     @Override
     public void run(String... args) throws Exception {
-        int count = petServiceMap.findAll().size();
+        int count = petService.findAll().size();
         if (count == 0) {
             loadData();
         }
