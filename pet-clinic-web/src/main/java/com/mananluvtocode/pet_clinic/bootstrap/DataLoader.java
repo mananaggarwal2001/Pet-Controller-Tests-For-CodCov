@@ -98,6 +98,21 @@ public class DataLoader implements CommandLineRunner {
 
         ownerService.save(owner2);
 
+        Owner manan= new Owner();
+        manan.setFirstName("Manan");
+        manan.setLastName("Aggarwal");
+        manan.setAddress("USA Japan");
+        manan.setCity("Japan");
+        manan.setAddress("987654321");
+        Pet personalCat= new Pet();
+        personalCat.setPetType(savedCatPetType);
+        personalCat.setBirthDate(LocalDate.now());
+        personalCat.setName("Kaali Billi");
+        personalCat.setOwner(manan);
+        manan.getPets().add(personalCat);
+
+        ownerService.save(manan);
+
         System.out.println("Loaded Owner!!!!!!!!!!!!!!");
         // for adding the visit service for doing the greater work.
         Visit catVisit = new Visit();
