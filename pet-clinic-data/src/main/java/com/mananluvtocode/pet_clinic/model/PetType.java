@@ -12,6 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Entity
+@ToString
 @Table(name = "types")
 public class PetType extends BaseEntity {
     @Column(name = "name")
