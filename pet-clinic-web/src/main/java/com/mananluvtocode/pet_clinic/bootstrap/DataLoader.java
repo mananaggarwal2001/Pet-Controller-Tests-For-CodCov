@@ -103,7 +103,7 @@ public class DataLoader implements CommandLineRunner {
         manan.setLastName("Aggarwal");
         manan.setAddress("USA Japan");
         manan.setCity("Japan");
-        manan.setAddress("987654321");
+        manan.setTelePhone("987654321");
         Pet personalCat= new Pet();
         personalCat.setPetType(savedCatPetType);
         personalCat.setBirthDate(LocalDate.now());
