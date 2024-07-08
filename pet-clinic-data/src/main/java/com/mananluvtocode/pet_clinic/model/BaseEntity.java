@@ -22,4 +22,11 @@ public class BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    public String isNew() {
+        if (this.id == null) {
+            return "Add Owner";
+        }
+        return "Update Owner";
+    }
 }

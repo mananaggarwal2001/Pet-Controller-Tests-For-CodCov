@@ -1,6 +1,7 @@
 package com.mananluvtocode.pet_clinic.controllers;
 
 import com.mananluvtocode.pet_clinic.model.Owner;
+import jakarta.validation.Valid;
 import org.springframework.ui.Model;
 import com.mananluvtocode.pet_clinic.services.OwnerService;
 import org.springframework.stereotype.Controller;
@@ -70,4 +71,40 @@ public class OwnerController {
         modelAndView.addObject("owner", owner);
         return modelAndView;
     }
+
+    // for performing the update or the creation of the form.
+    @GetMapping("/new")
+    public String initateNewOwner(Model themodel) {
+        themodel.addAttribute("owner", Owner.builder().build());
+        return "ownersName/createOrUpdateOwnerForm";
+    }
+
+    @PostMapping("/new")
+    public String processNewOwner(@Valid @ModelAttribute("owner") Owner theowner, BindingResult result) {
+        if (result.hasErrors()) {
+            return "ownersName/createOrUpdateOwnerForm";
+        } else {
+            Owner savedOwner = ownerService.save(theowner);
+            return "redirect:/owners/" + savedOwner.getId();
+        }
+    }
+
+    @GetMapping("/{ownerId}/edit")
+    public String initUpdationOfForm(@PathVariable("ownerId") Long ownerId, Model themodel) {
+        Owner resultOwner = ownerService.findById(ownerId);
+        themodel.addAttribute("owner", resultOwner);
+        return "ownersName/createOrUpdateOwnerForm";
+    }
+
+    @PostMapping("/{ownerId}/edit")
+    public String processUpdateOfOwnerForm(@Valid @PathVariable("ownerId") Long ownerId, @ModelAttribute("owner") Owner owner, BindingResult result) {
+        if (result.hasErrors()) {
+            return "ownersName/createOrUpdateOwnerForm";
+        } else {
+            owner.setId(ownerId);
+            Owner savedOwner = ownerService.save(owner);
+            return "redirect:/owners/" + owner.getId();
+        }
+    }
+
 }
