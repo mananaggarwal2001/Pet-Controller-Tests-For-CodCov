@@ -4,12 +4,12 @@ import com.mananluvtocode.pet_clinic.model.Owner;
 import org.springframework.ui.Model;
 import com.mananluvtocode.pet_clinic.services.OwnerService;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/owners")
@@ -30,20 +30,42 @@ public class OwnerController {
         dataBinder.setDisallowedFields("id");
     }
 
-    @RequestMapping({"/", "/index", "index.html", ""})
-    public String ownerpage(Model themodel) {
-        themodel.addAttribute("owners", ownerService.findAll());
-        return "owners/index";
-    }
+//    @RequestMapping({"/", "/index", "index.html", ""})
+//    public String ownerpage(Model themodel) {
+//        themodel.addAttribute("owners", ownerService.findAll());
+//        return "ownersName/index";
+//    }
 
     @RequestMapping({"/find", "/oups"})
-    public String findOwners() {
-        return "notImplemented";
+    public String findOwners(Model themodel) {
+        themodel.addAttribute("owner", Owner.builder().build());
+        return "ownersName/findOwner";
+    }
+
+    @PostMapping
+    public String processfindOwnerFormDetails(@ModelAttribute("owner") Owner owner, BindingResult result, Model themodel) {
+        System.out.println(owner.getLastName());
+        if (owner.getLastName() == null) {
+            owner.setLastName("");
+        }
+        List<Owner> resultOwnerByLastName = ownerService.findAllByLastNameLike(owner.getLastName());
+        System.out.println(resultOwnerByLastName.size());
+        if (resultOwnerByLastName.isEmpty()) {
+            result.rejectValue("lastName", "notfound", "Not Found");
+            themodel.addAttribute("owner", Owner.builder().build());
+            return "ownersName/findOwner";
+        } else if (resultOwnerByLastName.size() == 1) {
+            Owner originalOwner = resultOwnerByLastName.get(0);
+            return "redirect:/owners/" + originalOwner.getId();
+        } else {
+            themodel.addAttribute("selections", resultOwnerByLastName);
+            return "ownersName/ownerList";
+        }
     }
 
     @GetMapping("/{ownerId}")
     public ModelAndView findOwner(@PathVariable("ownerId") Long ownerId, Model themodel) {
-        ModelAndView modelAndView= new ModelAndView("owners/ownerDetails");
+        ModelAndView modelAndView = new ModelAndView("ownersName/ownerDetails");
         Owner owner = ownerService.findById(ownerId);
         modelAndView.addObject("owner", owner);
         return modelAndView;
