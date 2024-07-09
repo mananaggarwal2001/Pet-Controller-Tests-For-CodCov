@@ -15,6 +15,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.HashSet;
 
 // this is the unique way to making the controller and learning the new things for the further work.
 @Controller
@@ -32,8 +33,10 @@ public class PetController {
     }
 
     @ModelAttribute("types")
-    public Collection<PetType> populatePetTypes() {
-        return petTypeService.findAll();
+    public Collection<String> populatePetTypes() {
+        Collection<String> petTypeNameCollection = new HashSet<>();
+        petTypeService.findAll().forEach(element -> petTypeNameCollection.add(element.getName()));
+        return petTypeNameCollection;
     }
 
     @ModelAttribute("owner")
@@ -62,7 +65,8 @@ public class PetController {
             themodel.addAttribute("pet", pet);
             return PET_FORM;
         } else {
-            petService.save(pet);
+            pet.setOwner(owner);
+            ownerService.save(owner);
             return "redirect:/owners/" + owner.getId();
         }
     }
