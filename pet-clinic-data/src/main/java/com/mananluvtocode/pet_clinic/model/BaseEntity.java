@@ -23,10 +23,7 @@ public class BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    public String isNew() {
-        if (this.id == null) {
-            return "Add Owner";
-        }
-        return "Update Owner";
+    public boolean isNew() {
+        return this.id == null;
     }
 }
