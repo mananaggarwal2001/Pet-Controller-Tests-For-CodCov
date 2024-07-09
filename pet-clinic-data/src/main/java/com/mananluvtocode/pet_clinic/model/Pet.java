@@ -21,15 +21,9 @@ public class Pet extends BaseEntity {
         this.birthDate = birthDate;
         this.petType = petType;
         this.owner = owner;
-        this.visits = visits;
-    }
-
-    public Pet(String name, LocalDate birthDate, PetType petType, Owner owner, Set<Visit> visits) {
-        this.name = name;
-        this.birthDate = birthDate;
-        this.petType = petType;
-        this.owner = owner;
-        this.visits = visits;
+        if (visits == null || !visits.isEmpty()) {
+            this.visits = visits;
+        }
     }
 
     @Column(name = "name")
