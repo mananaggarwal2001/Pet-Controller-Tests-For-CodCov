@@ -1,20 +1,16 @@
 package com.mananluvtocode.pet_clinic.controllers;
-
-
-import com.mananluvtocode.pet_clinic.model.Owner;
 import com.mananluvtocode.pet_clinic.model.Pet;
 import com.mananluvtocode.pet_clinic.model.Visit;
 import com.mananluvtocode.pet_clinic.services.PetService;
 import com.mananluvtocode.pet_clinic.services.VisitService;
 import jakarta.validation.Valid;
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-
-import java.beans.PropertyEditorSupport;
 import java.time.LocalDate;
 
 @Controller
@@ -27,6 +23,12 @@ public class VisitController {
     public VisitController(VisitService visitService, PetService petService) {
         this.visitService = visitService;
         this.petService = petService;
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+        binder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
     @InitBinder
@@ -51,6 +53,10 @@ public class VisitController {
 
     @PostMapping("/owners/{ownerId}/pets/{petId}/visits/new")
     public String processVisitForm(@Valid Visit visit, BindingResult result, @ModelAttribute("ownerId") Long ownerId) {
+        System.out.println(visit.getDescription());
+        if (!StringUtils.hasLength(visit.getDescription())) {
+            result.rejectValue("description", "null", "Description is required");
+        }
         if (result.hasErrors()) {
             return VISIT_FORM;
         } else {

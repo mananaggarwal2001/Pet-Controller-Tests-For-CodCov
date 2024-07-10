@@ -1,5 +1,4 @@
 package com.mananluvtocode.pet_clinic.model;
-
 import jakarta.persistence.*;
 import lombok.*;
 
