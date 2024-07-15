@@ -32,13 +32,13 @@ jobs:
 
       - run: mvn dependency:go-offline
       - save_cache:
-        paths:
-          - ~/.m2
-        key: v1-dependencies-{‌{ checksum "pom.xml" }}
+          paths:
+            - ~/.m2
+          key: v1-dependencies-{‌{ checksum "pom.xml" }}
                  # run tests! and gen code coverage
       - run: mvn integration-test
-         - store_test_results:
-        path: target/surefire-reports
+      - store_test_results:
+          path: target/surefire-reports
       - run:
           name: Send to CodeCov
           command: bash <(curl -s https://codecov.io/bash)
