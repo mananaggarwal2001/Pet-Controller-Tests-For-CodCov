@@ -4,3 +4,4 @@
 - This is my personal project build during the Journey of the Course which is Spring Boot Beginner to Guru
 - This project taught me many things such as the OOPS and use of SOLID Principal and lot more things I learned from this project.
 - Now looking forward for doing more in this project and eager to complete this project.
+- New feature unlocked code coverage for covering the source codes in the number of test cases.
